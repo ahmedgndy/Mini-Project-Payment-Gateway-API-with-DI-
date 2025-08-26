@@ -1,14 +1,19 @@
+using PaymentGatewayApi.Models;
+
 class StripePaymentService : IPaymentService
 {
     public string Name => "Stripe";
 
-    public Dictionary<string, string > PaymentProcess(decimal amount)
-   {
-       return new Dictionary<string, string>
-       {
-           {"Status", "Success"},
-           {"Amount", amount.ToString()},
-           {"PaymentMethod", "strips"}
-       };
-   }
-}
+    public PaymentResponse PaymentProcess(PaymentRequest request)
+    {
+        // Implement Stripe payment processing logic here
+        return new PaymentResponse
+        {
+            Status = "Success",
+            Provider = Name,
+            Amount = request.Amount,
+            TransactionId = Guid.NewGuid().ToString(),
+            Message = "Payment processed successfully."
+        };
+    }
+};

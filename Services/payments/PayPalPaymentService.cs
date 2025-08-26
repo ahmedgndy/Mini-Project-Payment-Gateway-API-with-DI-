@@ -1,14 +1,22 @@
+using PaymentGatewayApi.Models;
+
 class PayPalPaymentService : IPaymentService
 {
     public string Name => "PayPal";
 
-    public Dictionary<string, string > PaymentProcess(decimal amount)
-   {
-       return new Dictionary<string, string>
-       {
-           {"Status", "Success"},
-           {"Amount", amount.ToString()},
-           {"PaymentMethod", "PayPal"}
-       };
-   }
+    public PaymentResponse PaymentProcess(PaymentRequest request)
+    {
+        // Implement PayPal payment processing logic here
+        return new PaymentResponse
+        {
+            Status = "Success",
+            Provider = Name,
+            Amount = request.Amount,
+            TransactionId = Guid.NewGuid().ToString(),
+            Message = "Payment processed successfully."
+        };
+    }
 }
+
+     
+

@@ -1,6 +1,8 @@
 
+using PaymentGatewayApi.Models;
+
 public interface IPaymentService
 {
-   Dictionary<string, string> PaymentProcess(decimal amount);
+   PaymentResponse PaymentProcess(PaymentRequest request);
    string Name { get; }
 }

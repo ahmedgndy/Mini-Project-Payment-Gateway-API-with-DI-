@@ -2,9 +2,10 @@
 
 
 ### post using String
-POST {{base}}/stripe
+POST {{base}}/pay/paypal/100
+
 
 
 ### post using Paypal
 
-POST {{base}}/paypal
+POST {{base}}/pay/visa/200
