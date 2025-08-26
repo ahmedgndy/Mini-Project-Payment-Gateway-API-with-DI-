@@ -1,0 +1,4 @@
+@base = http://localhost:5129 
+
+
+POST {{base}}/Payment
