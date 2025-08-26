@@ -7,12 +7,19 @@ builder.Services.AddPaymentServices();
 
 var app = builder.Build();
 
-app.MapPost("/Payment", (IPaymentService payment ) =>
+app.MapPost("/paypal", ( IPaymentService  payPalPaymentService) =>
 {
-   var result = payment.PaymentProcess(100);
-    return Results.Ok(result);
 
+    return payPalPaymentService.PaymentProcess(100);
 });
+
+app.MapPost("/stripe", ( IPaymentService stripePaymentService) =>
+{
+
+    return stripePaymentService.PaymentProcess(100);
+});
+
+
 
 app.Run();
 

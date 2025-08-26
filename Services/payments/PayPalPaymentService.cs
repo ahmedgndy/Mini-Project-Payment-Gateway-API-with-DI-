@@ -1,6 +1,8 @@
 class PayPalPaymentService : IPaymentService
 {
-   public Dictionary<string, string > PaymentProcess(decimal amount)
+    public string Name => "PayPal";
+
+    public Dictionary<string, string > PaymentProcess(decimal amount)
    {
        return new Dictionary<string, string>
        {

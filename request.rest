@@ -1,4 +1,10 @@
 @base = http://localhost:5129 
 
 
-POST {{base}}/Payment
+### post using String
+POST {{base}}/stripe
+
+
+### post using Paypal
+
+POST {{base}}/paypal
