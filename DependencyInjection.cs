@@ -3,8 +3,8 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddPaymentServices(this IServiceCollection services)
     {
-        services.AddTransient<IPayment, PayPalPaymentService>();
-        services.AddTransient<IPayment, StripePaymentService>();
+        services.AddTransient<IPaymentService, PayPalPaymentService>();
+        services.AddTransient<IPaymentService, StripePaymentService>();
         return services;
     }
 
