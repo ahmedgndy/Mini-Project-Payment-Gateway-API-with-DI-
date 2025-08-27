@@ -1,9 +1,11 @@
 using PaymentGatewayApi.Models;
 
-class StripePaymentService : IPaymentService
+class StripePaymentService : IPaymentService, ISingletonService
 {
     public string Name => "Stripe";
+    public Guid Id { get; } = Guid.NewGuid();
 
+    public string PaymentId => Guid.NewGuid().ToString();
     public PaymentResponse PaymentProcess(PaymentRequest request)
     {
         // Implement Stripe payment processing logic here

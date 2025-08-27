@@ -4,8 +4,8 @@ using PaymentGatewayApi.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 //registration the services 
-builder.Services.AddPaymentServices();
-builder.Services.AddTransient<IPaymentFactory, PaymentFactory>();
+builder.Services.AddPaymentServices(builder.Environment);
+
 
 
 var app = builder.Build();
@@ -21,7 +21,7 @@ app.MapPost("/pay/{paymentMethod}/{amount}", (string paymentMethod, decimal amou
             Currency = "USD",
             Description = $"Payment for {paymentMethod}"
         };
-        
+
         var paymentResponse = paymentService.PaymentProcess(paymentRequest);
 
         return Results.Ok(paymentResponse);
@@ -33,9 +33,18 @@ app.MapPost("/pay/{paymentMethod}/{amount}", (string paymentMethod, decimal amou
 });
 
 
+app.MapGet("/di/lifTimes", (ITransientService transientService  , ISingletonService singletonService) =>
+{
+      return Results.Ok(
+        new
+        {
+            Transient = transientService.Id,
+            Singleton = singletonService.Id
+        }
+      );
+});
 
 
 app.Run();
-
 
 

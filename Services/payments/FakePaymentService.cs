@@ -1,14 +1,12 @@
 using PaymentGatewayApi.Models;
 
-class PayPalPaymentService : IPaymentService,ITransientService
+class FakePaymentService : IPaymentService
 {
-    public string Name => "PayPal";
-    public Guid Id { get; } = Guid.NewGuid();
+    public string Name => "fake";
     public string PaymentId => Guid.NewGuid().ToString();
-
     public PaymentResponse PaymentProcess(PaymentRequest request)
     {
-        // Implement PayPal payment processing logic here
+        // Implement fake payment processing logic here
         return new PaymentResponse
         {
             Status = "Success",
@@ -21,4 +19,3 @@ class PayPalPaymentService : IPaymentService,ITransientService
 }
 
      
-
