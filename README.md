@@ -1,90 +1,97 @@
-Payment API – Minimal API with DI Lifetimes
+# Payment API – Minimal API with DI Lifetimes
 
-This project is a .NET Minimal API that demonstrates:
+This project is a **.NET Minimal API** that demonstrates key software engineering concepts including **Dependency Injection (DI)** and the **Factory Pattern**. It's designed to handle payment processing for different providers, with a focus on showcasing different service lifetimes and environment-specific configuration.
 
-Using Dependency Injection (DI) with different lifetimes (Transient, Scoped, Singleton).
+---
 
-A Payment Factory Pattern to switch between payment providers (PayPal, Stripe, Fake).
+### 🚀 How to Run
 
-Environment–based service registration (Development vs Production).
+To get the project up and running on your local machine, follow these steps:
 
-🚀 How to Run
+1.  **Clone the repository:**
+    ```bash
+    git clone [https://github.com/your-username/your-repo-name.git](https://github.com/your-username/your-repo-name.git)
+    cd your-repo-name
+    ```
 
-Clone the repo.
+2.  **Restore dependencies:**
+    ```bash
+    dotnet restore
+    ```
 
-Restore dependencies:
+3.  **Run the project:**
+    ```bash
+    dotnet run
+    ```
 
-dotnet restore
+The API will be available at `http://localhost:5129`.
 
+---
 
-Run the project:
+### 📌 Endpoints
 
-dotnet run
+The API provides two main endpoints for demonstration.
 
+#### **Process Payment**
+This endpoint processes a payment using a specified provider and amount. It uses the **Factory Pattern** to dynamically select the correct payment service.
 
-The API will be available at:
+* **URL:** `POST /pay/{provider}/{amount}`
 
-http://localhost:5129
+* **Example Requests:**
+    * **PayPal Payment:** `POST http://localhost:5129/pay/paypal/100`
+    * **Visa Payment:** `POST http://localhost:5129/pay/visa/200`
+    * **Fake Provider (for testing):** `POST http://localhost:5129/pay/fake/300`
 
-📌 Endpoints
-1. Process Payment
+* **Example Response (Success):**
+    ```json
+    {
+      "status": "Success",
+      "provider": "PayPal",
+      "amount": 100,
+      "transactionId": "f73e734c-6624-4cec-b5ef-482d282700ae",
+      "message": "Payment processed successfully."
+    }
+    ```
 
-POST /pay/{provider}/{amount}
+* **Example Response (Error):**
+    ```json
+    {
+      "error": "Payment Provider Not Supported"
+    }
+    ```
 
-Example Requests
-### PayPal Payment
-POST http://localhost:5129/pay/paypal/100
+#### **Dependency Injection Lifetimes**
+This endpoint demonstrates the different **DI lifetimes** (Transient, Scoped, and Singleton) by returning unique **GUIDs** for each service. This helps visualize how each lifetime manages a service instance.
 
-### Visa Payment
-POST http://localhost:5129/pay/visa/200
+* **URL:** `GET /di/lifetimes`
 
-### Fake Provider (for testing)
-POST http://localhost:5129/pay/fake/300
+* **Example Response:**
+    ```json
+    {
+      "transient": "2a09bbe7-be97-40dd-9b12-09c565261cad",
+      "scoped": "8f7a63e2-1886-455d-80b0-2f1fd42b7b5a",
+      "singleton": "62d7b4cd-ff8a-4f6d-9cb9-9e1e6cdadd11"
+    }
+    ```
 
-Example Response
-{
-  "status": "Success",
-  "provider": "PayPal",
-  "amount": 100,
-  "transactionId": "f73e734c-6624-4cec-b5ef-482d282700ae",
-  "message": "Payment processed successfully."
-}
+---
 
-Example Error Response
-{
-  "error": "Payment Provider Not Supported"
-}
+### 🛠️ Tech Stack
 
-2. Dependency Injection Lifetimes
+* **Backend:** .NET 7/8 Minimal API
+* **Concepts:** Dependency Injection (Transient, Scoped, Singleton)
+* **Design Pattern:** Factory Pattern
+* **Configuration:** Environment-based configuration
 
-GET /di/lifetimes
+---
 
-Shows GUIDs for each service lifetime (Transient, Scoped, Singleton).
+### 📖 Notes
 
-Example Request
-GET http://localhost:5129/di/lifetimes
+* **Environment-based Registration:** The `FakePaymentService` is only registered and available when the application is running in the **Development** environment.
+* **Production Configuration:** In the **Production** environment, only the real payment providers (PayPal, Stripe) are registered and accessible.
+* **Lifetime Demonstration:** The `/di/lifetimes` endpoint uses unique **GUIDs** to clearly illustrate the behavior of each service lifetime:
+    * A **transient** service creates a new instance for every request.
+    * A **scoped** service creates one instance per client request.
+    * A **singleton** service creates only one instance for the entire application's lifetime.
 
-Example Response
-{
-  "transient": "2a09bbe7-be97-40dd-9b12-09c565261cad",
-  "scoped": "8f7a63e2-1886-455d-80b0-2f1fd42b7b5a",
-  "singleton": "62d7b4cd-ff8a-4f6d-9cb9-9e1e6cdadd11"
-}
-
-🛠️ Tech Stack
-
-.NET 7/8 Minimal API
-
-Dependency Injection (Transient, Scoped, Singleton)
-
-Factory Pattern
-
-Environment–based configuration
-
-📖 Notes
-
-FakePaymentService is registered only in Development.
-
-In Production, only real providers (PayPal, Stripe) are registered.
-
-Lifetimes are demonstrated with unique GUIDs.
+ 
