@@ -5,6 +5,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 //registration the services 
 builder.Services.AddPaymentServices(builder.Environment);
+builder.Services.AddLifetimeServices();
 
 
 
@@ -15,7 +16,7 @@ app.MapPost("/pay/{paymentMethod}/{amount}", (string paymentMethod, decimal amou
     try
     {
         var paymentService = paymentFactory.GetService(paymentMethod);
-       var  paymentRequest= new PaymentRequest
+        var paymentRequest = new PaymentRequest
         {
             Amount = amount,
             Currency = "USD",

@@ -8,9 +8,12 @@ public interface IPaymentFactory
 public class PaymentFactory : IPaymentFactory
 {
     private readonly IEnumerable<IPaymentService> _service;
-    public PaymentFactory(IEnumerable<IPaymentService> services)
+    private readonly IHostEnvironment _env;
+
+    public PaymentFactory(IEnumerable<IPaymentService> services, IHostEnvironment env)
     {
         _service = services;
+        _env = env;
     }
     public IPaymentService GetService(string provider)
     {
